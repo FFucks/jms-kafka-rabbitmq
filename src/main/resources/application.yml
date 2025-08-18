@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  jms:
+    # false => fila (queue). Se quiser tópico (pub/sub), mudar para true.
+    pub-sub-domain: false
+
+app:
+  jms:
+    queue: demo.queue
