@@ -1,15 +1,32 @@
-server:
-  port: 8080
+#spring:
+#  artemis:
+#    mode: embedded          # usa broker em memória (in-VM)
+#    embedded:
+#      enabled: true
+#      queues: demo.queue    # cria a fila automaticamente
+#  jms:
+#    template:
+#      default-destination: demo.queue
+#    listener:
+#      acknowledge-mode: auto
+#app:
+#  jms:
+#    queue: demo.queue
+#server:
+#  port: 8080
 
 spring:
-  activemq:
-    broker-url: tcp://localhost:61616
-    user: admin
-    password: admin
-  jms:
-    # false => fila (queue). Se quiser tópico (pub/sub), mudar para true.
-    pub-sub-domain: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: demo-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 app:
-  jms:
-    queue: demo.queue
+  kafka:
+    topic: demo.orders
